@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import TextBox from "./TextBox";
 import Slider from "./Slider";
@@ -8,11 +8,18 @@ export default function Controls({
   onInvest,
   onSeeFinalResult,
   onStopSimulation,
+  isSimulationRunning,
+  simulationEnded,
 }) {
   const [amount, setAmount] = useState(49.99);
   const [interestRate, setInterestRate] = useState(10);
   const [years, setYears] = useState(10);
-  const [isSimulationRunning, setIsSimulationRunning] = useState(false);
+  const [internalIsSimulationRunning, setInternalIsSimulationRunning] =
+    useState(false);
+
+  useEffect(() => {
+    setInternalIsSimulationRunning(isSimulationRunning);
+  }, [isSimulationRunning]);
 
   const handleAmountChange = (newValue) => {
     setAmount(Number(newValue));
@@ -28,11 +35,12 @@ export default function Controls({
   };
 
   const handleStartStop = () => {
-    setIsSimulationRunning(!isSimulationRunning);
-    if (!isSimulationRunning) {
-      onInvest(amount, interestRate, years); // Start simulation
+    if (!internalIsSimulationRunning) {
+      onInvest(amount, interestRate, years);
+    } else if (simulationEnded) {
+      onInvest(amount, interestRate, years);
     } else {
-      onStopSimulation(); // Stop simulation
+      onStopSimulation();
     }
   };
 
@@ -51,6 +59,7 @@ export default function Controls({
           minWidth: "200px",
           maxWidth: "250px",
           minHeight: "400px",
+          marginLeft: "10px",
         }}
       >
         {/* Input Rows for Amount, Interest Rate, and Years */}
@@ -101,7 +110,9 @@ export default function Controls({
         <Row className="justify-content-center">
           <Col md={6}>
             <Button variant="primary" onClick={handleStartStop}>
-              {isSimulationRunning ? "Stop" : "Start"}
+              {internalIsSimulationRunning && !simulationEnded
+                ? "Stop"
+                : "Start"}
             </Button>
           </Col>
           <Col md={6}>

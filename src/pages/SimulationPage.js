@@ -23,26 +23,23 @@ export default function SimulationPage() {
 
     if (isSimulationRunning && currentYear <= totalYears) {
       const delay = 1000 / simulationSpeed;
-
       timeoutId = setTimeout(() => {
         const rate = simulationResults.interestRate / 100;
-        const results = calculateYearlyInvestmentResults(
+        const newResults = calculateYearlyInvestmentResults(
           simulationResults.amount,
           rate,
           currentYear
         );
         setSimulationResults((prevResults) => ({
           ...prevResults,
-          simpleInterest: [
-            ...prevResults.simpleInterest,
-            results.simpleInterest[currentYear - 1],
-          ],
-          compoundInterest: [
-            ...prevResults.compoundInterest,
-            results.compoundInterest[currentYear - 1],
-          ],
+          simpleInterest: newResults.simpleInterest,
+          compoundInterest: newResults.compoundInterest,
         }));
-        setCurrentYear(currentYear + 1);
+        if (currentYear < totalYears) {
+          setCurrentYear(currentYear + 1);
+        } else {
+          setIsSimulationRunning(false);
+        }
       }, delay);
     }
 
@@ -64,7 +61,11 @@ export default function SimulationPage() {
   };
 
   const handleInvest = (amount, interestRate, years) => {
-    if (!isSimulationRunning) {
+    // Case 1: Restart the simulation from the beginning if it has ended
+    if (
+      currentYear > totalYears ||
+      (!isSimulationRunning && currentYear === totalYears)
+    ) {
       setIsSimulationRunning(true);
       setSimulationResults({
         amount,
@@ -74,6 +75,8 @@ export default function SimulationPage() {
       });
       setTotalYears(years);
       setCurrentYear(1);
+    } else if (!isSimulationRunning && currentYear < totalYears) {
+      setIsSimulationRunning(true);
     }
   };
 
@@ -83,24 +86,17 @@ export default function SimulationPage() {
 
   const handleSeeFinalResult = (amount, interestRate, years) => {
     setIsSimulationRunning(false);
-    setCurrentYear(years);
-
     const rate = interestRate / 100;
     const finalResults = calculateYearlyInvestmentResults(amount, rate, years);
-
-    setSimulationResults({
-      ...simulationResults,
-      simpleInterest: finalResults.simpleInterest,
-      compoundInterest: finalResults.compoundInterest,
-    });
-
-    console.log(finalResults);
+    setSimulationResults(finalResults);
+    setCurrentYear(years);
+    setIsSimulationRunning(false);
   };
 
   return (
     <SimulationArea>
-      <Container className="text-center py-5">
-        {showInstructions && (
+      <Container className=" text-center py-5" fluid>
+        {showInstructions ? (
           <Row>
             <Col>
               <h1 className="simulation-font">
@@ -126,8 +122,7 @@ export default function SimulationPage() {
               </div>
             </Col>
           </Row>
-        )}
-        {!showInstructions && (
+        ) : (
           <>
             <Row className="mb-4">
               <Col xs={12}>
@@ -135,14 +130,17 @@ export default function SimulationPage() {
               </Col>
             </Row>
             <Row>
-              <Col xs={12} md={4}>
+              <Col xs={12} lg={4}>
                 <Controls
                   onInvest={handleInvest}
                   onStopSimulation={handleStopSimulation}
                   onSeeFinalResult={handleSeeFinalResult}
+                  isSimulationRunning={isSimulationRunning}
+                  currentYear={currentYear}
+                  totalYears={totalYears}
                 />
               </Col>
-              <Col xs={12} md={8}>
+              <Col xs={12} lg={8} className="d-flex justify-content-around">
                 {simulationResults.simpleInterest.length > 0 && (
                   <SimulationResult
                     title="Simple Interest"
