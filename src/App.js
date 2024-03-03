@@ -16,6 +16,8 @@ export default function App() {
               backgroundImage: `url('${process.env.PUBLIC_URL}/bg.png')`,
               backgroundSize: "cover",
               backgroundPosition: "center",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              backgroundBlendMode: "multiply",
             }}
           >
             <Routes>

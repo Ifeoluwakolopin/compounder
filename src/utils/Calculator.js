@@ -15,16 +15,37 @@ function calculateCompoundInterest(principal, interestRate, years) {
   return results;
 }
 
-function formatYearAndAmount(year, amount) {
-  const formattedYear = year.toLocaleString("en-US", {
-    minimumIntegerDigits: 2,
-  });
-  const formattedAmount = `$${amount.toFixed(2)}`;
-  return `${formattedYear}: ${formattedAmount}`;
+function calculateYearlyInvestmentResults(amount, interestRate, years) {
+  const simpleInterestResults = [];
+  const compoundInterestResults = [];
+
+  for (let year = 1; year <= years; year++) {
+    const simpleInterestResult = calculateSimpleInterest(
+      amount,
+      interestRate,
+      year
+    );
+    const compoundInterestResult = calculateCompoundInterest(
+      amount,
+      interestRate,
+      year
+    );
+
+    simpleInterestResults.push({
+      year: simpleInterestResult.years,
+      amount: simpleInterestResult.finalAmount,
+    });
+    compoundInterestResults.push(compoundInterestResult[year - 1].amount); // Access year-end amount for compound interest
+  }
+
+  return {
+    simpleInterest: simpleInterestResults,
+    compoundInterest: compoundInterestResults,
+  };
 }
 
 export {
   calculateSimpleInterest,
   calculateCompoundInterest,
-  formatYearAndAmount,
+  calculateYearlyInvestmentResults,
 };

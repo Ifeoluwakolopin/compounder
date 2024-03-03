@@ -1,7 +1,10 @@
 import React, { useState, useRef } from "react";
 import Form from "react-bootstrap/Form";
 
-export default function TextBox({ label, value, onChange }) {
+export default function TextBox({ label, value, onChange, step }) {
+  const customCursorStyle = {
+    cursor: `url('${process.env.PUBLIC_URL}/icons8-cursor-55.png'), pointer`,
+  };
   const inputRef = useRef(null);
   const [inputValue, setInputValue] = useState(value || "");
 
@@ -12,12 +15,12 @@ export default function TextBox({ label, value, onChange }) {
   };
 
   return (
-    <Form.Group>
+    <Form.Group style={customCursorStyle}>
       <Form.Label className="text-muted">{label}</Form.Label>
       <Form.Control
         ref={inputRef}
         type="number"
-        step="0.01"
+        step={step}
         value={inputValue}
         placeholder={label}
         onChange={handleChange}

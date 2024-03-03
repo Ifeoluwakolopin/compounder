@@ -42,10 +42,12 @@ export default function SimulationPage() {
                 power of compound interest and see how your money can truly grow
                 over time!
               </p>
-              <SimulationButton
-                onClick={handleStartSimulation}
-                label="Start Simulation"
-              />
+              <div className="simulation-font">
+                <SimulationButton
+                  onClick={handleStartSimulation}
+                  label="Start Simulation"
+                />
+              </div>
             </Col>
           </Row>
         )}

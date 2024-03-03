@@ -14,7 +14,7 @@ export default function HomePage() {
       <h1 className="display-3 text-center mb-5 simulation-font">
         All about Interests!{" "}
       </h1>
-      <div className="text-center">
+      <div className="text-center simulation-font">
         <SimulationButton label="Get Started" onClick={handleGetStarted} />
       </div>
     </SimulationArea>
