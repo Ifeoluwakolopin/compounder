@@ -7,9 +7,8 @@ export default function SimulationButton({ label, onClick }) {
 
   return (
     <Button
-      variant="primary"
       size="lg"
-      className="px-5 py-3"
+      className="px-5 py-3 simulation-font"
       onClick={onClick}
       style={customCursorStyle}
     >

@@ -1,3 +1,4 @@
+import React from "react";
 import { Container, Card } from "react-bootstrap";
 
 export default function SimulationArea({ children }) {
@@ -8,12 +9,12 @@ export default function SimulationArea({ children }) {
   return (
     <Container className="d-flex justify-content-center align-items-center vh-100">
       <Card
-        className="shadow-lg"
+        className="shadow-lg simulation-area"
         style={{
           ...customCursorStyle,
           width: "95%",
           height: "95%",
-          background: "#fff",
+          background: "linear-gradient(to bottom, #e0f2ff, #d3eefe, #a8e1c9)", // Light blue to light green gradient
           margin: "2rem",
           overflow: "auto",
         }}
