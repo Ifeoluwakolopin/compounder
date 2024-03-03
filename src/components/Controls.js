@@ -4,7 +4,11 @@ import TextBox from "./TextBox";
 import Slider from "./Slider";
 import CustomCursor from "./CustomCursor";
 
-export default function Controls({ onInvest, onSeeFinalResult }) {
+export default function Controls({
+  onInvest,
+  onSeeFinalResult,
+  onStopSimulation,
+}) {
   const [amount, setAmount] = useState(49.99);
   const [interestRate, setInterestRate] = useState(10);
   const [years, setYears] = useState(10);
@@ -15,7 +19,7 @@ export default function Controls({ onInvest, onSeeFinalResult }) {
   };
 
   const handleInterestRateChange = (event) => {
-    const updatedInterestRate = event.target.value;
+    const updatedInterestRate = Number(event.target.value);
     setInterestRate(updatedInterestRate);
   };
 
@@ -25,16 +29,16 @@ export default function Controls({ onInvest, onSeeFinalResult }) {
 
   const handleStartStop = () => {
     setIsSimulationRunning(!isSimulationRunning);
-    if (isSimulationRunning) {
+    if (!isSimulationRunning) {
       onInvest(amount, interestRate, years); // Start simulation
     } else {
-      // Stop simulation logic (implementation depends on specific simulation logic)
-      console.log("Simulation stopped");
+      onStopSimulation(); // Stop simulation
     }
   };
 
   const handleSeeFinalResult = () => {
-    console.log("Simulation stopped");
+    // Passing an extra argument to distinguish this action from regular investment simulation start
+    onSeeFinalResult(amount, interestRate, years, true);
   };
 
   return (
@@ -49,12 +53,17 @@ export default function Controls({ onInvest, onSeeFinalResult }) {
           minHeight: "400px",
         }}
       >
+        {/* Input Rows for Amount, Interest Rate, and Years */}
         <Row className="justify-content-center mb-1">
           <Col md={12} className="text-center">
             <b>1. Enter an investment amount:</b>
           </Col>
           <Col md={12}>
-            <TextBox value={amount} onChange={handleAmountChange} step={0.01} />
+            <TextBox
+              value={amount.toString()}
+              onChange={handleAmountChange}
+              step={0.01}
+            />
           </Col>
         </Row>
 
@@ -62,9 +71,9 @@ export default function Controls({ onInvest, onSeeFinalResult }) {
           <Col md={12} className="text-center">
             <b>
               2. Set interest rate:{" "}
-              <text style={{ color: "blue", fontSize: "25px" }}>
+              <span style={{ color: "blue", fontSize: "25px" }}>
                 {interestRate}%
-              </text>
+              </span>
             </b>
           </Col>
           <Col md={12}>
@@ -84,14 +93,12 @@ export default function Controls({ onInvest, onSeeFinalResult }) {
           <Col md={12}>
             <TextBox
               value={years.toString()}
-              onChange={(value) => handleYearsChange(value)}
+              onChange={handleYearsChange}
               step={1}
             />
           </Col>
         </Row>
-
         <Row className="justify-content-center">
-          {" "}
           <Col md={6}>
             <Button variant="primary" onClick={handleStartStop}>
               {isSimulationRunning ? "Stop" : "Start"}
