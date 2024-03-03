@@ -81,8 +81,20 @@ export default function SimulationPage() {
     setIsSimulationRunning(false);
   };
 
-  const handleSeeFinalResult = (amount, interestRate, years, isFinal) => {
-    // Assuming you have a function to handle the simulation logic differently
+  const handleSeeFinalResult = (amount, interestRate, years) => {
+    setIsSimulationRunning(false);
+    setCurrentYear(years);
+
+    const rate = interestRate / 100;
+    const finalResults = calculateYearlyInvestmentResults(amount, rate, years);
+
+    setSimulationResults({
+      ...simulationResults,
+      simpleInterest: finalResults.simpleInterest,
+      compoundInterest: finalResults.compoundInterest,
+    });
+
+    console.log(finalResults);
   };
 
   return (
