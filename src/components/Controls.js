@@ -13,7 +13,7 @@ export default function Controls({
 }) {
   const [amount, setAmount] = useState(49.99);
   const [interestRate, setInterestRate] = useState(10);
-  const [years, setYears] = useState(10);
+  const [years, setYears] = useState(50);
   const [internalIsSimulationRunning, setInternalIsSimulationRunning] =
     useState(false);
 
