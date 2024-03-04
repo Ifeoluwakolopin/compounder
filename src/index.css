@@ -30,6 +30,11 @@ code {
   font-family: "Overlock SC", sans-serif;
 }
 
+.simulation-text-font {
+  font-style: italic;
+  font-family: "Lato", sans-serif;
+}
+
 .controls-container {
   display: flex;
   flex-direction: column;

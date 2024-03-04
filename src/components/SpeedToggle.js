@@ -18,7 +18,7 @@ export default function SpeedToggle({ onSpeedChange }) {
           <Form.Select
             aria-label="Speed select"
             onChange={(e) => onSpeedChange(e.target.value)}
-            defaultValue="4"
+            defaultValue="2"
           >
             <option value="1">1x</option>
             <option value="2">2x</option>

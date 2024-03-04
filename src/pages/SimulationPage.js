@@ -14,7 +14,7 @@ export default function SimulationPage() {
     compoundInterest: [],
   });
   const [isSimulationRunning, setIsSimulationRunning] = useState(false);
-  const [simulationSpeed, setSimulationSpeed] = useState(1);
+  const [simulationSpeed, setSimulationSpeed] = useState(2);
   const [currentYear, setCurrentYear] = useState(1);
   const [totalYears, setTotalYears] = useState(0);
   const [maxAmount, setMaxAmount] = useState(1000);
@@ -100,20 +100,25 @@ export default function SimulationPage() {
         {showInstructions ? (
           <Row>
             <Col>
-              <h1 className="simulation-font">
-                All about the Compound Interest
-              </h1>
+              <h1 className="simulation-font">What is Compound Interest? 📊</h1>
               <p
-                className="text-center mx-auto mb-4 simulation-font"
+                className="text-center mx-auto mb-4 simulation-text-font"
                 style={{ maxWidth: "600px", fontSize: "1.25rem" }}
               >
-                Imagine saving money in a piggy bank. Each year, you earn
-                interest on your savings, just like the piggy bank grows fatter!
-                This interest can be simple, like adding a fixed amount each
-                year, or compound, where you earn interest on the interest
-                you've already earned. This simulation lets you explore the
-                power of compound interest and see how your money can truly grow
-                over time!
+                "Compound interest is like a pack of dominoes; your initial
+                investment topples the first domino, triggering a chain where
+                each new piece represents your growing interest. As the chain
+                continues, your investment exponentially grows, building upon
+                itself over time."
+              </p>
+              <h1 className="simulation-font">How to play? 🧩</h1>
+              <p
+                className="text-center mx-auto mb-4 simulation-text-font"
+                style={{ maxWidth: "600px", fontSize: "1.25rem" }}
+              >
+                You are an investor, choose your investment amount, interest
+                rate, and how many years you want to invest, and see how your
+                investment grows over time 💹
               </p>
               <div className="simulation-font">
                 <SimulationButton
