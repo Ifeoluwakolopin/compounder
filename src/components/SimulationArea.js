@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Card } from "react-bootstrap";
+import VolumeButton from "./VolumeButton";
 
 export default function SimulationArea({ children }) {
   const customCursorStyle = {
@@ -20,6 +21,12 @@ export default function SimulationArea({ children }) {
         }}
       >
         <Card.Body className="d-flex flex-column justify-content-center">
+          <div
+            className="position-absolute"
+            style={{ top: 0, right: 0, padding: "10px" }}
+          >
+            <VolumeButton />
+          </div>
           {children}
         </Card.Body>
       </Card>

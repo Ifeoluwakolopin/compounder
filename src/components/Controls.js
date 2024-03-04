@@ -4,6 +4,7 @@ import TextBox from "./TextBox";
 import Slider from "./Slider";
 import CustomCursor from "./CustomCursor";
 import { calculateCompoundInterest } from "../utils/Calculator";
+import { useMute } from "../contexts/MuteContext";
 
 export default function Controls({
   onInvest,
@@ -13,7 +14,7 @@ export default function Controls({
   simulationEnded,
   setMaxAmount,
 }) {
-  const [amount, setAmount] = useState(49.99);
+  const [amount, setAmount] = useState(100);
   const [interestRate, setInterestRate] = useState(10);
   const [years, setYears] = useState(50);
   const [internalIsSimulationRunning, setInternalIsSimulationRunning] =
@@ -36,6 +37,15 @@ export default function Controls({
     setYears(Math.floor(Number(newValue)));
   };
 
+  const { isMuted } = useMute();
+
+  const playSound = () => {
+    if (!isMuted) {
+      const audio = new Audio(`${process.env.PUBLIC_URL}/ka-ching.mp3`);
+      audio.play();
+    }
+  };
+
   const handleStartStop = () => {
     if (!internalIsSimulationRunning) {
       setMaxAmount(
@@ -44,6 +54,7 @@ export default function Controls({
         )[0].amount * 1.1
       );
       onInvest(amount, interestRate, years);
+      playSound();
     } else if (simulationEnded) {
       onInvest(amount, interestRate, years);
     } else {
@@ -52,7 +63,7 @@ export default function Controls({
   };
 
   const handleSeeFinalResult = () => {
-    // Passing an extra argument to distinguish this action from regular investment simulation start
+    playSound();
     onSeeFinalResult(amount, interestRate, years, true);
   };
 
