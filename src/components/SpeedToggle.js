@@ -4,6 +4,7 @@ import { Form } from "react-bootstrap";
 export default function SpeedToggle({ onSpeedChange }) {
   return (
     <div
+      className="simulation-font"
       style={{
         minWidth: "200px",
         maxWidth: "250px",

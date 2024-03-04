@@ -26,17 +26,16 @@ function calculateYearlyInvestmentResults(amount, interestRate, years) {
       year
     );
     simpleInterestResults.push({
-      year: year, // Directly use the loop variable
+      year: year,
       amount: simpleInterestResult.finalAmount,
     });
 
-    // Corrected to calculate compound interest up to the specified year
     const compoundInterestResult = calculateCompoundInterest(
       amount,
       interestRate,
       year
     );
-    // Ensure each year's result is captured correctly
+
     compoundInterestResults.push({
       year: compoundInterestResult[compoundInterestResult.length - 1].year,
       amount: compoundInterestResult[compoundInterestResult.length - 1].amount,

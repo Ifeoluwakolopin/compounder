@@ -3,6 +3,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import TextBox from "./TextBox";
 import Slider from "./Slider";
 import CustomCursor from "./CustomCursor";
+import { calculateCompoundInterest } from "../utils/Calculator";
 
 export default function Controls({
   onInvest,
@@ -10,6 +11,7 @@ export default function Controls({
   onStopSimulation,
   isSimulationRunning,
   simulationEnded,
+  setMaxAmount,
 }) {
   const [amount, setAmount] = useState(49.99);
   const [interestRate, setInterestRate] = useState(10);
@@ -36,6 +38,11 @@ export default function Controls({
 
   const handleStartStop = () => {
     if (!internalIsSimulationRunning) {
+      setMaxAmount(
+        calculateCompoundInterest(amount, interestRate / 100, years).slice(
+          -1
+        )[0].amount * 1.1
+      );
       onInvest(amount, interestRate, years);
     } else if (simulationEnded) {
       onInvest(amount, interestRate, years);

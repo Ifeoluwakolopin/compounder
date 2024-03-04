@@ -17,6 +17,7 @@ export default function SimulationPage() {
   const [simulationSpeed, setSimulationSpeed] = useState(1);
   const [currentYear, setCurrentYear] = useState(1);
   const [totalYears, setTotalYears] = useState(0);
+  const [maxAmount, setMaxAmount] = useState(1000);
 
   useEffect(() => {
     let timeoutId;
@@ -138,24 +139,26 @@ export default function SimulationPage() {
                   isSimulationRunning={isSimulationRunning}
                   currentYear={currentYear}
                   totalYears={totalYears}
+                  setMaxAmount={setMaxAmount}
                 />
               </Col>
-              <Col xs={12} lg={8} className="d-flex justify-content-around">
-                {simulationResults.simpleInterest.length > 0 && (
+
+              {simulationResults.simpleInterest.length > 0 && (
+                <Col xs={12} lg={8} className="d-flex justify-content-around">
                   <SimulationResult
                     title="Simple Interest"
                     data={simulationResults.simpleInterest}
                     isLine={true}
+                    maxAmount={maxAmount}
                   />
-                )}
-                {simulationResults.compoundInterest.length > 0 && (
                   <SimulationResult
                     title="Compound Interest"
                     data={simulationResults.compoundInterest}
                     isLine={true}
+                    maxAmount={maxAmount}
                   />
-                )}
-              </Col>
+                </Col>
+              )}
             </Row>
           </>
         )}

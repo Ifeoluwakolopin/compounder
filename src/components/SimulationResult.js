@@ -1,6 +1,7 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useRef } from "react";
 import { Line } from "react-chartjs-2";
-import { Container, Row, Col } from "react-bootstrap";
+import MoneyBox from "./MoneyBox";
+import { Container, Row, Col } from "react-bootstrap"; // Using Bootstrap container
 import {
   Chart,
   CategoryScale,
@@ -34,6 +35,7 @@ function reducer(state, action) {
             ...state.datasets[0],
             label: action.title,
             data: action.data,
+            backgroundColor: action.backgroundColor, // Set background color
           },
         ],
       };
@@ -42,7 +44,7 @@ function reducer(state, action) {
   }
 }
 
-export default function SimulationResult({ title, data, isLine }) {
+export default function SimulationResult({ title, data, isLine, maxAmount }) {
   const [chartData, dispatch] = useReducer(reducer, {
     labels: [],
     datasets: [
@@ -59,24 +61,38 @@ export default function SimulationResult({ title, data, isLine }) {
     ],
   });
 
+  const chartContainer = useRef(null);
+
   useEffect(() => {
     if (data) {
       const labels = data.map((item) =>
         item.year ? item.year.toString() : "N/A"
       );
       const amountData = data.map((item) => item.amount);
-      dispatch({ type: "setData", labels, title, data: amountData });
-    }
-  }, [data, title]);
 
-  // Ensure finalAmount is a number and defaults to 0 if data is empty or amount is undefined
+      // Determine the background color based on the last data point
+      const backgroundColor =
+        amountData[amountData.length - 1] > maxAmount / 2
+          ? "green" // Set to red if amount exceeds half of maxAmount
+          : "red";
+
+      dispatch({
+        type: "setData",
+        labels,
+        title,
+        data: amountData,
+        backgroundColor,
+      });
+    }
+  }, [data, title, maxAmount]);
+
   const finalAmount =
     data && data.length > 0 && typeof data[data.length - 1].amount === "number"
       ? data[data.length - 1].amount
       : 0;
 
   return (
-    <Container>
+    <Container className="simulation-font">
       <Row className="mb-3">
         <Col>
           <h3>{title}</h3>
@@ -85,7 +101,7 @@ export default function SimulationResult({ title, data, isLine }) {
       <Row>
         <Col>
           {isLine && (
-            <div style={{ height: "240px" }}>
+            <div ref={chartContainer} style={{ height: "300px" }}>
               <Line
                 data={chartData}
                 options={{
@@ -101,13 +117,27 @@ export default function SimulationResult({ title, data, isLine }) {
             </div>
           )}
         </Col>
+        <Col>
+          <MoneyBox
+            data={data.map((item) => item.amount)}
+            maxAmount={maxAmount}
+            graphHeight={chartContainer.current?.offsetHeight || 0}
+            style={{ width: "20px" }}
+          />
+        </Col>
       </Row>
       <Row className="mt-3">
         <Col>
-          <p>
-            The final investment after{" "}
-            {data.length > 0 ? data[data.length - 1].year : 0} years is $
-            {finalAmount.toFixed(2)}
+          <p style={{ fontSize: "18px" }}>
+            The final investment after
+            <span style={{ color: "blue", fontSize: "22px" }}>
+              {" "}
+              {data.length > 0 ? data[data.length - 1].year : 0}
+            </span>{" "}
+            years is{" "}
+            <span style={{ color: "blue", fontSize: "25px" }}>
+              ${finalAmount.toFixed(2)}
+            </span>
           </p>
         </Col>
       </Row>
