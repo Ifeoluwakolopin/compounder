@@ -45,26 +45,29 @@ export default function Controls({
   const audioRef = useRef(new Audio(`${process.env.PUBLIC_URL}/money_2.mp3`));
 
   useEffect(() => {
-    // This effect ensures that the audio stops if the component unmounts
+    const audio = audioRef.current;
+    audio.addEventListener("ended", () => {
+      audio.currentTime = 0;
+    });
+
     return () => {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
+      audio.pause();
+      audio.removeEventListener("ended", () => {
+        audio.currentTime = 0;
+      });
     };
   }, []);
 
   const playSound = () => {
-    if (!isMuted) {
-      if (audioRef.current.ended) {
-        audioRef.current.currentTime = 0;
-      }
+    if (!isMuted && audioRef.current.paused) {
       audioRef.current.play();
     }
   };
 
   const pauseSound = () => {
     audioRef.current.pause();
+    // Do not reset currentTime to 0 here to allow continuation
   };
-
   const handleStartStop = () => {
     if (!internalIsSimulationRunning) {
       setMaxAmount(
