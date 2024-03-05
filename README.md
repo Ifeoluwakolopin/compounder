@@ -2,9 +2,12 @@
 
 ## Description
 
-Compounder is a web-based simulation game designed to teach users about the principles of compound interest in an engaging and interactive way. Built with React, this educational tool simplifies complex financial concepts, allowing users to visualize the growth of their investments over time through the power of compound interest. Whether you're a finance student, a budding investor, or just curious about how money grows, Compounder offers a fun and informative experience. You can test it out youself [here](https://compound-interest-simulator-2baccc2c1531.herokuapp.com/)
+Compounder is a web-based simulation game designed to teach users about the principles of compound interest in an engaging and interactive way. Built with React, this educational tool simplifies complex financial concepts, allowing users to visualize the growth of their investments over time through the power of compound interest. Whether you're a finance student, a budding investor, or just curious about how money grows, Compounder offers a fun and informative experience. You can test it out yourself [here](https://compound-interest-simulator-2baccc2c1531.herokuapp.com/)
 
 ## Demo
+https://github.com/Ifeoluwakolopin/compounder/assets/60819380/a44e651c-3a14-4aff-b149-fa9eeac1356a
+
+
 
 ## Running the Project Locally
 
