@@ -66,7 +66,6 @@ export default function Controls({
 
   const pauseSound = () => {
     audioRef.current.pause();
-    // Do not reset currentTime to 0 here to allow continuation
   };
   const handleStartStop = () => {
     if (!internalIsSimulationRunning) {
