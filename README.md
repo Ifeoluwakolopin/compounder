@@ -1,7 +1,3 @@
-Certainly! Below is a simple README template for your web-based simulation game, "Compounder". You can adjust the content as needed to better fit your project specifics or personal preferences.
-
----
-
 # Compounder: A Compound Interest Simulation Game
 
 ## Description
