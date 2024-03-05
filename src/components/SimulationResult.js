@@ -98,31 +98,27 @@ export default function SimulationResult({ title, data, isLine, maxAmount }) {
           <h3>{title}</h3>
         </Col>
       </Row>
-      <Row>
-        <Col>
+      <Row className="chart-moneybox-container">
+        {/* Adjust the column sizing here */}
+        <Col xs={12} md={8} lg={9} className="chart-container">
+          {" "}
+          {/* Allocate more space for the chart on larger screens */}
           {isLine && (
             <div ref={chartContainer} style={{ height: "300px" }}>
               <Line
                 data={chartData}
                 options={{
                   maintainAspectRatio: false,
-                  scales: {
-                    x: {
-                      type: "linear",
-                      position: "bottom",
-                    },
-                  },
                 }}
               />
             </div>
           )}
         </Col>
-        <Col>
+        <Col xs={12} md={4} lg={3}>
           <MoneyBox
             data={data.map((item) => item.amount)}
             maxAmount={maxAmount}
             graphHeight={chartContainer.current?.offsetHeight || 0}
-            style={{ width: "20px" }}
           />
         </Col>
       </Row>

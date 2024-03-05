@@ -46,6 +46,11 @@ export default function Controls({
 
   useEffect(() => {
     const audio = audioRef.current;
+
+    if (isMuted) {
+      audio.pause();
+    }
+
     audio.addEventListener("ended", () => {
       audio.currentTime = 0;
     });
@@ -56,7 +61,7 @@ export default function Controls({
         audio.currentTime = 0;
       });
     };
-  }, []);
+  }, [isMuted]);
 
   const playSound = () => {
     if (!isMuted && audioRef.current.paused) {

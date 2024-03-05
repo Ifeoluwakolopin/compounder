@@ -7,8 +7,11 @@ export default function VolumeButton() {
   const { isMuted, toggleMute } = useMute();
 
   return (
-    <Button onClick={toggleMute} variant="primary">
-      {isMuted ? <VolumeMuteFill /> : <VolumeUpFill />}
-    </Button>
+    <div className="text-center simulation-font">
+      <Button onClick={toggleMute} variant="primary">
+        {isMuted ? <VolumeMuteFill /> : <VolumeUpFill />}
+      </Button>
+      <div style={{ fontSize: "12px", marginTop: "5px" }}>Mute Sound</div>
+    </div>
   );
 }

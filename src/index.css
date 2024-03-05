@@ -46,3 +46,29 @@ code {
   padding: 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.125);
 }
+
+.chart-moneybox-container {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.chart-container, .moneybox-container {
+  flex-grow: 1;
+  min-width: 50px;
+}
+
+@media (max-width: 768px) {
+  .chart-moneybox-container {
+    flex-direction: column;
+  }
+
+  .chart-container, .moneybox-container {
+    flex-basis: 50%;
+  }
+}
+
+@media (max-width: 576px) {
+  .chart-container, .moneybox-container {
+    flex-basis: 100%;
+  }
+}
